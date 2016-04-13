@@ -17,4 +17,10 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-autopublish             # Publish all data to the clients (for prototyping)
+aldeed:simple-schema
+reywood:publish-composite
+aldeed:collection2
+check
+materialize:materialize
+mdg:validated-method
+mdg:validation-error
