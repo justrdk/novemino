@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 
 import { Projects } from '../../api/projects/projects.js';
 
-
 Meteor.startup(() => {
 	if (Projects.find().count() === 0) {
 		const projects = [{
