@@ -4,7 +4,7 @@
         "indent": [2, "tab"],
         "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
         "no-console": 0,
-        "arrow-body-style": ["error", "always"]
+        "prefer-arrow-callback": 0
     },
   "parser": "babel-eslint"
 }
