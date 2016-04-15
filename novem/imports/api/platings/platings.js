@@ -20,6 +20,11 @@ const schema = new SimpleSchema({
 	name: {
 		type: String,
 	},
+	isActive: {
+		type: Boolean,
+		defaultValue: true,
+		optional: true,
+	},
 });
 
 Platings.attachSchema(schema);
