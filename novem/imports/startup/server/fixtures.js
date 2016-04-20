@@ -10,8 +10,8 @@ const initProjects = () => {
 	const projects = [{
 		name: 'BR166',
 	}];
-
 	if (Projects.find().count() === 0) {
+		console.log('inserting projects');
 		projects.forEach((project) => {
 			Projects.insert({
 				name: project.name,

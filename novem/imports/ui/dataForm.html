@@ -1,0 +1,17 @@
+<template name="dataForm">
+ <div class="row form-container">
+    <form class="col s12">
+    <div class="row">
+        <div class="input-field col s6">
+            <select>
+                <option value="" disabled selected>Escoja un Proyecto</option>
+                {{#each projects}}
+                <option value="1">Option {{name}}</option>
+                {{/each}}
+            </select>
+            <label>Materialize Select</label>
+        </div>
+    </div>
+    </form>
+</div>  
+</template>

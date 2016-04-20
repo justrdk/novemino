@@ -1,6 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-
 export const Projects = new Mongo.Collection('Projects');
 
 Projects.deny({
@@ -25,6 +24,27 @@ const projectSchema = new SimpleSchema({
 		optional: true,
 	},
 });
+
+// if (Meteor.isServer) {
+// 	Meteor.publishComposite('projects', function projects() {
+// 		return {
+// 			find() {
+// 				return Projects.find({
+// 					isActive: true,
+// 				});
+// 			},
+// 			children: [{
+// 				find(project) {
+// 					return Pieces.find({
+// 						projectId: project._id,
+// 						isActive: true,
+// 					});
+// 				},
+// 			}],
+// 		};
+// 	});
+// }
+
 
 Projects.attachSchema(projectSchema);
 

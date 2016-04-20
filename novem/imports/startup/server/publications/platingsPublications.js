@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Platings } from '../platings.js';
-import { Processes } from '../../processes/processes.js';
-import { Materials } from '../../materials/materials.js';
+import { Platings } from '../../../api/platings/platings.js';
+import { Processes } from '../../../api/processes/processes.js';
+import { Materials } from '../../../api/materials/materials.js';
 
 Meteor.publishComposite('platingsProcessesMaterials', function platingsProcessesMaterials() {
 	return {
