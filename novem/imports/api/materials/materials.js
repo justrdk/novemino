@@ -16,7 +16,14 @@ Materials.deny({
 });
 
 const schema = new SimpleSchema({
-	name: {
+	sapNumber: {
+		type: String,
+	},
+	description: {
+		type: String,
+		max: 2000,
+	},
+	measurementUnit: {
 		type: String,
 	},
 	isActive: {
