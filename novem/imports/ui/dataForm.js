@@ -12,15 +12,15 @@ import './dataForm.html';
 Template.dataForm.onCreated(function dataFormOnCreated() {
 	const projectsSub = this.subscribe('projects');
 	const platingsSub = this.subscribe('platingsProcessesMaterials');
+	this.pieces = new ReactiveVar([]);
+	this.processes = new ReactiveVar([]);
+	this.materials = new ReactiveVar([]);
+
 	this.autorun(() => {
 		if (projectsSub.ready() && platingsSub.ready()) {
 			$('select').material_select();
 		}
 	});
-
-	this.pieces = new ReactiveVar([]);
-	this.processes = new ReactiveVar([]);
-	this.materials = new ReactiveVar([]);
 });
 
 Template.dataForm.onRendered(function dataFormOnRendered() {
@@ -61,14 +61,13 @@ Template.dataForm.events({
 	'change #platings'(event, instance) {
 		const target = event.target;
 		const selectedPlating = $(target).val();
-		console.log(selectedPlating);
 
 		if (selectedPlating) {
 			const processes = Processes.find({
 				isActive: true,
 				platingId: selectedPlating,
 			});
-			console.log(processes.count());
+
 			instance.processes.set(processes);
 			Tracker.afterFlush(() => {
 				$('select').material_select();
