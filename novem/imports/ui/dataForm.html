@@ -1,15 +1,42 @@
 <template name="dataForm">
- <div class="row form-container">
+ <div class="row form-container form-wrapper">
     <form class="col s12">
     <div class="row">
         <div class="input-field col s6">
-            <select>
+            <select id="projects">
                 <option value="" disabled selected>Escoja un Proyecto</option>
                 {{#each projects}}
-                <option value="1">Option {{name}}</option>
+                    <option value="{{_id}}">{{name}}</option>
                 {{/each}}
             </select>
-            <label>Materialize Select</label>
+            <label>Proyectos</label>
+        </div>
+         <div class="input-field col s6">
+            <select id="pieces">
+                <option value="" disabled selected>Escoja una Pieza</option>
+                {{#each pieces}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <label>Piezas</label>
+        </div>
+        <div class="input-field col s6">
+            <select id="platings">
+                <option value="" disabled selected>Escoja un Enchape</option>
+                {{#each platings}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <label>Enchapes</label>
+        </div>
+        <div class="input-field col s6">
+            <select id="processes">
+                <option value="" disabled selected>Escoja un Proceso</option>
+                {{#each processes}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <label>Procesos</label>
         </div>
     </div>
     </form>
