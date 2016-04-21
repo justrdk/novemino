@@ -37,6 +37,9 @@ Template.dataForm.helpers({
 	platings() {
 		return Platings.find();
 	},
+	processes() {
+		return Template.instance().processes.get();
+	},
 });
 
 Template.dataForm.events({
