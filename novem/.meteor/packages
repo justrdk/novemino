@@ -24,3 +24,5 @@ check
 materialize:materialize
 mdg:validated-method
 mdg:validation-error
+manuel:viewmodel
+iron:router

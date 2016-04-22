@@ -15,6 +15,12 @@ Template.dataForm.onCreated(function dataFormOnCreated() {
 	this.pieces = new ReactiveVar([]);
 	this.processes = new ReactiveVar([]);
 	this.materials = new ReactiveVar([]);
+	this.selectedProject = new ReactiveVar('');
+	this.selectedPiece = new ReactiveVar('');
+	this.selectedProcess = new ReactiveVar('');
+	this.selectedMaterial = new ReactiveVar('');
+	this.selectedPlating = new ReactiveVar('');
+	this.quantity = new ReactiveVar(0);
 
 	this.autorun(() => {
 		if (projectsSub.ready() && platingsSub.ready()) {
@@ -52,6 +58,7 @@ Template.dataForm.events({
 				isActive: true,
 				projectId: selectedProject,
 			});
+			instance.selectedProject.set(selectedProject);
 			instance.pieces.set(pieces);
 			Tracker.afterFlush(() => {
 				$('select').material_select();
@@ -68,10 +75,32 @@ Template.dataForm.events({
 				platingId: selectedPlating,
 			});
 
+			instance.selectedPlating.set(selectedPlating);
 			instance.processes.set(processes);
 			Tracker.afterFlush(() => {
 				$('select').material_select();
 			});
 		}
+	},
+	'change #pieces'(event, instance) {
+		const target = event.target;
+		const selectedPiece = $(target).val();
+
+		if (selectedPiece) {
+			instance.selectedPlating.set(selectedPiece);
+		}
+	},
+	'change #processes'(event, instance) {
+		const target = event.target;
+		const selectedProcess = $(target).val();
+
+		if (selectedProcess) {
+			instance.selectedProcess.set(selectedProcess);
+		}
+	},
+	'input #quantity'(event, instance) {
+		const target = event.target;
+		const quantity = $(target).val();
+		instance.quantity.set(quantity);
 	},
 });

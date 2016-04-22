@@ -1,6 +1,6 @@
 <template name="dataForm">
  <div class="row form-container form-wrapper">
-	<form class="col s8">
+	<div class="col s8">
 		<div class="row">
 			<div class="input-field col s8 offset-s4">
 				<select id="projects">
@@ -45,19 +45,14 @@
 		</div>
 		<div class="row">
 			<div class="col s8 offset-s4">
-				<button class="btn waves-effect waves-light blue" name="calcular">Calcular</button>
+				<button class="btn waves-effect waves-light blue" name="calcular" id="calculate">Calcular</button>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col s8 offset-s4">
-				<button class="btn waves-effect waves-light green" name="nuevo-calculo">Ingresar Nuevo Calculo</button>
+				<button class="btn waves-effect waves-light green" name="nuevo-calculo" id="newDataSet">Ingresar Nuevo Calculo</button>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col s8 offset-s4">
-				<button class="btn waves-effect waves-light red" name="limpiar-calculo">Limpiar Calculos</button>
-			</div>
-		</div>
-	</form>
+	</div>
 </div>  
 </template>
