@@ -2,15 +2,17 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Tracker } from 'meteor/tracker';
-import { Projects } from '../api/projects/projects.js';
-import { Pieces } from '../api/pieces/pieces.js';
-import { Platings } from '../api/platings/platings.js';
-import { Processes } from '../api/processes/processes.js';
+import { Projects } from '../../api/projects/projects.js';
+import { Pieces } from '../../api/pieces/pieces.js';
+import { Platings } from '../../api/platings/platings.js';
+import { Processes } from '../../api/processes/processes.js';
+import { Materials } from '../../api/materials/materials.js';
+import { ProcessMaterials } from '../../api/processMaterials/processMaterials.js';
 
 import './dataForm.html';
 
 Template.dataForm.onCreated(function dataFormOnCreated() {
-	const projectsSub = this.subscribe('projects');
+	const projectsSub = this.subscribe('projectsWithPieces');
 	const platingsSub = this.subscribe('platingsProcessesMaterials');
 	this.pieces = new ReactiveVar([]);
 	this.processes = new ReactiveVar([]);
@@ -18,9 +20,11 @@ Template.dataForm.onCreated(function dataFormOnCreated() {
 	this.selectedProject = new ReactiveVar('');
 	this.selectedPiece = new ReactiveVar('');
 	this.selectedProcess = new ReactiveVar('');
-	this.selectedMaterial = new ReactiveVar('');
 	this.selectedPlating = new ReactiveVar('');
+	this.materialsDetails = new ReactiveVar([]);
 	this.quantity = new ReactiveVar(0);
+
+	this.subscribe('materialsConsumption');
 
 	this.autorun(() => {
 		if (projectsSub.ready() && platingsSub.ready()) {
@@ -102,5 +106,22 @@ Template.dataForm.events({
 		const target = event.target;
 		const quantity = $(target).val();
 		instance.quantity.set(quantity);
+	},
+	'click #calculate'(event, instance) {
+		const processMaterials = ProcessMaterials.find({
+			isActive: true,
+			processId: instance.selectedProcess.get(),
+			pieceId: instance.selectedPiece.get(),
+		}).map((processMaterial) => ({
+			materialId: processMaterial.materialId,
+			amount: processMaterial.amount,
+		}));
+
+		processMaterials.forEach((processMaterial) => {
+			Materials.find({
+				isActive: true,
+				_id: processMaterial.materialId,
+			});
+		});
 	},
 });

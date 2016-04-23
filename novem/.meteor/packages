@@ -26,3 +26,4 @@ mdg:validated-method
 mdg:validation-error
 manuel:viewmodel
 iron:router
+pcel:toastr

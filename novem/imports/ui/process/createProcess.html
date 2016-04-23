@@ -1,0 +1,26 @@
+<template name="createProcess">
+ <div class="row form-container form-wrapper">
+	<div class="col s8">
+		<div class="row">
+			<div class="input-field col s8 offset-s4">
+				<select id="platings">
+					<option value="" disabled selected>Escoja un Enchape</option>
+					{{#each platings}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Enchapes</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<input placeholder="Nombre" id="process" type="text" class="validate">
+				<label for="piece">Nombre Proceso</label>
+        	</div>
+		</div>
+		<div class="row">
+			<div class="col s8 offset-s4">
+				<button class="btn waves-effect waves-light blue" name="create-process" id="create-process">Crear Proceso</button>
+			</div>
+		</div>
+	</div>
+</div>  
+</template>
