@@ -25,26 +25,5 @@ const projectSchema = new SimpleSchema({
 	},
 });
 
-// if (Meteor.isServer) {
-// 	Meteor.publishComposite('projects', function projects() {
-// 		return {
-// 			find() {
-// 				return Projects.find({
-// 					isActive: true,
-// 				});
-// 			},
-// 			children: [{
-// 				find(project) {
-// 					return Pieces.find({
-// 						projectId: project._id,
-// 						isActive: true,
-// 					});
-// 				},
-// 			}],
-// 		};
-// 	});
-// }
-
-
 Projects.attachSchema(projectSchema);
 

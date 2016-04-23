@@ -31,9 +31,6 @@ const schema = new SimpleSchema({
 		defaultValue: true,
 		optional: true,
 	},
-	processId: {
-		type: String,
-	},
 });
 
 Materials.attachSchema(schema);

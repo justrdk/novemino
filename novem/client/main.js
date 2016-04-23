@@ -1,3 +1,1 @@
-import './main.html';
-import '../imports/ui/navbar.js';
-import '../imports/ui/dataForm.js';
+import '../imports/startup/client/routes.js';
