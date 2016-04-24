@@ -1,33 +1,32 @@
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { $ } from 'meteor/jquery';
 import { Tracker } from 'meteor/tracker';
+
+import './materialConsumption.html';
 import { Projects } from '../../api/projects/projects.js';
 import { Pieces } from '../../api/pieces/pieces.js';
 import { Platings } from '../../api/platings/platings.js';
 import { Processes } from '../../api/processes/processes.js';
 import { Materials } from '../../api/materials/materials.js';
-import { ProcessMaterials } from '../../api/processMaterials/processMaterials.js';
+import { insert } from '../../api/processMaterials/methods.js';
 
-import './dataForm.html';
-
-Template.dataForm.onCreated(function dataFormOnCreated() {
+Template.materialConsumption.onCreated(function materialConsumptionOnCreated() {
 	this.pieces = new ReactiveVar([]);
 	this.processes = new ReactiveVar([]);
-	this.materials = new ReactiveVar([]);
 	this.selectedProject = new ReactiveVar('');
 	this.selectedPiece = new ReactiveVar('');
 	this.selectedProcess = new ReactiveVar('');
 	this.selectedPlating = new ReactiveVar('');
-	this.materialsDetails = new ReactiveVar([]);
+	this.selectedMaterial = new ReactiveVar('');
 	this.quantity = new ReactiveVar(0);
 });
 
-Template.dataForm.onRendered(function dataFormOnRendered() {
+Template.materialConsumption.onRendered(function dataFormOnRendered() {
 	$('select').material_select();
 });
 
-Template.dataForm.helpers({
+Template.materialConsumption.helpers({
 	projects() {
 		return Projects.find();
 	},
@@ -40,12 +39,12 @@ Template.dataForm.helpers({
 	processes() {
 		return Template.instance().processes.get();
 	},
-	materialsDetais() {
-		return Template.instance().materialsDetails.get();
+	materials() {
+		return Materials.find();
 	},
 });
 
-Template.dataForm.events({
+Template.materialConsumption.events({
 	'change #projects'(event, instance) {
 		const target = event.target;
 		const selectedProject = $(target).val();
@@ -95,36 +94,35 @@ Template.dataForm.events({
 			instance.selectedProcess.set(selectedProcess);
 		}
 	},
+	'change #materials'(event, instance) {
+		const target = event.target;
+		const selectedMaterial = $(target).val();
+
+		if (selectedMaterial) {
+			instance.selectedMaterial.set(selectedMaterial);
+		}
+	},
 	'input #quantity'(event, instance) {
 		const target = event.target;
-		const quantity = parseInt($(target).val(), 10);
+		const quantity = $(target).val();
 		instance.quantity.set(quantity);
 	},
-	'click #calculate'(event, instance) {
-		let materials = [];
+	'click #create-data'(event, instance) {
+		const processId = instance.selectedProcess.get();
+		const materialId = instance.selectedMaterial.get();
+		const pieceId = instance.selectedPiece.get();
+		const amount = parseFloat(instance.quantity.get(), 10);
 
-		const processMaterials = ProcessMaterials.find({
-			isActive: true,
-			processId: instance.selectedProcess.get(),
-			pieceId: instance.selectedPiece.get(),
-		}).map((processMaterial) => ({
-			materialId: processMaterial.materialId,
-			amount: processMaterial.amount,
-		}));
-
-		processMaterials.forEach((processMaterial) => {
-			const materialFound = Materials.findOne({
-				isActive: true,
-				_id: processMaterial.materialId,
-			});
-
-			materialFound.amount = processMaterial.amount;
-			materialFound.totalAmount = processMaterial.amount * instance.quantity.get();
-			materials.push(materialFound);
+		insert.call({
+			processId,
+			materialId,
+			pieceId,
+			amount,
+		}, (err) => {
+			if (err && err.error) {
+				return toastr.error(err.error);
+			}
+			toastr.success('Consumo de material actualizado');
 		});
-
-		const materialDetails = instance.materialsDetails.get();
-		const concatMaterialDetails = materialDetails.concat(materials);
-		instance.materialsDetails.set(concatMaterialDetails);
 	},
 });

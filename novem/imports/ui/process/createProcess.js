@@ -7,14 +7,11 @@ import { Platings } from '../../api/platings/platings.js';
 import { insert } from '../../api/processes/methods.js';
 
 Template.createProcess.onCreated(function createProcessOnCreated() {
-	const platingsSub = this.subscribe('allPlatings');
 	this.selectedPlating = new ReactiveVar('');
+});
 
-	this.autorun(() => {
-		if (platingsSub.ready()) {
-			$('select').material_select();
-		}
-	});
+Template.createProcess.onRendered(function createProcessOnRendered() {
+	$('select').material_select();
 });
 
 Template.createProcess.helpers({
