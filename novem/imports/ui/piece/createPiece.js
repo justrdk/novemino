@@ -7,14 +7,11 @@ import { Projects } from '../../api/projects/projects.js';
 import { insert } from '../../api/pieces/methods.js';
 
 Template.createPiece.onCreated(function createPieceOnCreated() {
-	const projectsSub = this.subscribe('allProjects');
 	this.selectedProject = new ReactiveVar('');
+});
 
-	this.autorun(() => {
-		if (projectsSub.ready()) {
-			$('select').material_select();
-		}
-	});
+Template.createPiece.onRendered(function createPieceOnRendered() {
+	$('select').material_select();
 });
 
 Template.createPiece.helpers({

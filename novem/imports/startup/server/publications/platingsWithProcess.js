@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Platings } from '../../../api/platings/platings.js';
 import { Processes } from '../../../api/processes/processes.js';
-import { Materials } from '../../../api/materials/materials.js';
 
-Meteor.publishComposite('platingsProcessesMaterials', function platingsProcessesMaterials() {
+Meteor.publishComposite('platingsProcesses', function platingsProcesses() {
 	return {
 		find() {
 			return Platings.find({
@@ -17,14 +16,6 @@ Meteor.publishComposite('platingsProcessesMaterials', function platingsProcesses
 					isActive: true,
 				});
 			},
-			children: [{
-				find(process) {
-					return Materials.find({
-						processId: process._id,
-						isActive: true,
-					});
-				},
-			}],
 		}],
 	};
 });
