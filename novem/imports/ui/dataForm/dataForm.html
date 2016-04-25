@@ -41,7 +41,7 @@
 			<div class="input-field col s8 offset-s4">
 				<input placeholder="Cantidad" id="quantity" type="text" class="validate">
 				<label for="quantity">Cantidad</label>
-        	</div>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col s8 offset-s4">
@@ -54,5 +54,25 @@
 			</div>
 		</div>
 	</div>
-</div>  
+</div> 
+<div class="row">	
+	<table class="bordered centered">
+		<thead>
+			<tr>
+				<th data-field="id">Numero Sap</th>
+				<th data-field="id">Material</th>
+				<th data-field="price">Total de Material a preparar</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each materialsDetails}}
+				<tr>
+					<td>{{sapNumber}}</td>
+					<td>{{description}}</td>
+					<td>{{totalAmount}} - {{measurementUnit}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	  </table>
+</div> 
 </template>
