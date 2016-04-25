@@ -40,7 +40,7 @@ Template.dataForm.helpers({
 	processes() {
 		return Template.instance().processes.get();
 	},
-	materialsDetais() {
+	materialsDetails() {
 		return Template.instance().materialsDetails.get();
 	},
 });
@@ -101,7 +101,9 @@ Template.dataForm.events({
 		instance.quantity.set(quantity);
 	},
 	'click #calculate'(event, instance) {
-		let materials = [];
+		const materials = [];
+		const dupMaterials = [];
+		let materialsWithoutDuplicates = [];
 
 		const processMaterials = ProcessMaterials.find({
 			isActive: true,
@@ -109,6 +111,7 @@ Template.dataForm.events({
 			pieceId: instance.selectedPiece.get(),
 		}).map((processMaterial) => ({
 			materialId: processMaterial.materialId,
+			processId: processMaterial.processId,
 			amount: processMaterial.amount,
 		}));
 
@@ -118,13 +121,34 @@ Template.dataForm.events({
 				_id: processMaterial.materialId,
 			});
 
-			materialFound.amount = processMaterial.amount;
 			materialFound.totalAmount = processMaterial.amount * instance.quantity.get();
 			materials.push(materialFound);
 		});
 
 		const materialDetails = instance.materialsDetails.get();
-		const concatMaterialDetails = materialDetails.concat(materials);
+
+		materialDetails.forEach((material) => {
+			materials.forEach((mat) => {
+				if (material._id === mat._id) {
+					material.totalAmount = material.totalAmount + mat.totalAmount;
+					dupMaterials.push(mat);
+				}
+			});
+		});
+
+		if (dupMaterials.length > 0) {
+			dupMaterials.forEach((dupMaterial) => {
+				materials.forEach((material) => {
+					if (material._id !== dupMaterial._id) {
+						materialsWithoutDuplicates.push(material);
+					}
+				});
+			});
+		} else {
+			materialsWithoutDuplicates = materials;
+		}
+
+		const concatMaterialDetails = materialDetails.concat(materialsWithoutDuplicates);
 		instance.materialsDetails.set(concatMaterialDetails);
 	},
 });
