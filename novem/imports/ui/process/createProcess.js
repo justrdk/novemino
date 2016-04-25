@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Materialize } from 'meteor/materialize:materialize';
 
 import './createProcess.html';
 import { Platings } from '../../api/platings/platings.js';
@@ -34,9 +35,9 @@ Template.createProcess.events({
 			name,
 		}, (err) => {
 			if (err && err.error) {
-				return toastr.error(err.error);
+				return Materialize.toast(err.error, 4000);
 			}
-			toastr.success('Proceso creado exitosamente');
+			Materialize.toast('Proceso creado exitosamente', 4000);
 			$('#process').val('');
 		});
 	},

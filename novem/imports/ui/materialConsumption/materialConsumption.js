@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { $ } from 'meteor/jquery';
 import { Tracker } from 'meteor/tracker';
+import { Materialize } from 'meteor/materialize:materialize';
 
 import './materialConsumption.html';
 import { Projects } from '../../api/projects/projects.js';
@@ -120,9 +121,10 @@ Template.materialConsumption.events({
 			amount,
 		}, (err) => {
 			if (err && err.error) {
-				return toastr.error(err.error);
+				return Materialize.toast(err.error, 4000);
 			}
-			toastr.success('Consumo de material actualizado');
+
+			Materialize.toast('Consumo de material actualizado', 4000);
 		});
 	},
 });

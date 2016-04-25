@@ -4,4 +4,5 @@ import './navbar.html';
 
 Template.navbar.onRendered(function navbarOnRendered() {
 	$('.dropdown-button').dropdown();
+	$('.button-collapse').sideNav();
 });
