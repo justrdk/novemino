@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Materialize } from 'meteor/materialize:materialize';
 
 import './createPiece.html';
 import { Projects } from '../../api/projects/projects.js';
@@ -34,9 +35,11 @@ Template.createPiece.events({
 			name,
 		}, (err) => {
 			if (err && err.error) {
-				return toastr.error(err.error);
+				return Materialize.toast(err.error, 4000);
 			}
-			toastr.success('Pieza creada exitosamente');
+
+
+			Materialize.toast('Pieza creada exitosamente', 4000);
 			$('#piece').val('');
 		});
 	},

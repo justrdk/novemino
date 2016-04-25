@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Materialize } from 'meteor/materialize:materialize';
 
 import './createMaterial.html';
 import { insert } from '../../api/materials/methods.js';
@@ -16,13 +17,13 @@ Template.createMaterial.events({
 			measurementUnit,
 		}, (err) => {
 			if (err && err.error) {
-				return toastr.error(err.error);
+				return Materialize.toast(err.error, 4000);
 			}
 			$('#sapNumber').val('');
 			$('#description').val('');
 			$('#measurement-unit').val('');
 
-			toastr.success('Material creado exitosamente');
+			Materialize.toast('Material creado exitosamente', 4000);
 		});
 	},
 });
