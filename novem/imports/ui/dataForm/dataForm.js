@@ -13,11 +13,9 @@ import './dataForm.html';
 
 Template.dataForm.onCreated(function dataFormOnCreated() {
 	this.pieces = new ReactiveVar([]);
-	this.processes = new ReactiveVar([]);
 	this.materials = new ReactiveVar([]);
 	this.selectedProject = new ReactiveVar('');
 	this.selectedPiece = new ReactiveVar('');
-	this.selectedProcess = new ReactiveVar('');
 	this.selectedPlating = new ReactiveVar('');
 	this.materialsDetails = new ReactiveVar([]);
 	this.quantity = new ReactiveVar(0);
@@ -36,9 +34,6 @@ Template.dataForm.helpers({
 	},
 	platings() {
 		return Platings.find();
-	},
-	processes() {
-		return Template.instance().processes.get();
 	},
 	materialsDetails() {
 		return Template.instance().materialsDetails.get();
@@ -103,26 +98,31 @@ Template.dataForm.events({
 	'click #calculate'(event, instance) {
 		const materials = [];
 		const dupMaterials = [];
+		const selectedPlating = instance.selectedPlating.get();
 		let materialsWithoutDuplicates = [];
 
-		const processMaterials = ProcessMaterials.find({
+		const processes = Processes.find({
+			platingId: selectedPlating,
 			isActive: true,
-			processId: instance.selectedProcess.get(),
-			pieceId: instance.selectedPiece.get(),
-		}).map((processMaterial) => ({
-			materialId: processMaterial.materialId,
-			processId: processMaterial.processId,
-			amount: processMaterial.amount,
-		}));
+		}).fetch();
 
-		processMaterials.forEach((processMaterial) => {
-			const materialFound = Materials.findOne({
+		processes.forEach((process) => {
+			const processMaterials = ProcessMaterials.find({
 				isActive: true,
-				_id: processMaterial.materialId,
-			});
+				processId: process._id,
+				pieceId: instance.selectedPiece.get(),
+			}).fetch();
 
-			materialFound.totalAmount = processMaterial.amount * instance.quantity.get();
-			materials.push(materialFound);
+			processMaterials.forEach((processMaterial) => {
+				const materialFound = Materials.findOne({
+					isActive: true,
+					_id: processMaterial.materialId,
+				});
+
+				materialFound.totalAmount = processMaterial.amount * instance.quantity.get();
+				materialFound.process = process.name;
+				materials.push(materialFound);
+			});
 		});
 
 		const materialDetails = instance.materialsDetails.get();
@@ -137,12 +137,14 @@ Template.dataForm.events({
 		});
 
 		if (dupMaterials.length > 0) {
-			dupMaterials.forEach((dupMaterial) => {
-				materials.forEach((material) => {
-					if (material._id !== dupMaterial._id) {
-						materialsWithoutDuplicates.push(material);
-					}
+			materials.forEach((material) => {
+				const isDuplicate = dupMaterials.some((dupMaterial) => {
+					return dupMaterial._id === material._id;
 				});
+
+				if (!isDuplicate) {
+					materialsWithoutDuplicates.push(material);
+				}
 			});
 		} else {
 			materialsWithoutDuplicates = materials;
@@ -150,5 +152,8 @@ Template.dataForm.events({
 
 		const concatMaterialDetails = materialDetails.concat(materialsWithoutDuplicates);
 		instance.materialsDetails.set(concatMaterialDetails);
+	},
+	'click #clean-calculations'(event, instance) {
+		instance.materialsDetails.set([]);
 	},
 });
