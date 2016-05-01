@@ -30,15 +30,6 @@
 				<label>Enchapes</label>
 			</div>
 			<div class="input-field col s8 offset-s4">
-				<select id="processes">
-					<option value="" disabled selected>Escoja un Proceso</option>
-					{{#each processes}}
-						<option value="{{_id}}">{{name}}</option>
-					{{/each}}
-				</select>
-				<label>Procesos</label>
-			</div>
-			<div class="input-field col s8 offset-s4">
 				<input placeholder="Cantidad" id="quantity" type="text" class="validate">
 				<label for="quantity">Cantidad</label>
 			</div>
@@ -50,7 +41,7 @@
 		</div>
 		<div class="row">
 			<div class="col s8 offset-s4">
-				<button class="btn waves-effect waves-light green darken-3" name="nuevo-calculo" id="newDataSet">Ingresar Nuevo Calculo</button>
+				<button class="btn waves-effect waves-light green darken-3" name="nuevo-calculo" id="clean-calculations">Limpiar Calculos</button>
 			</div>
 		</div>
 	</div>
@@ -61,6 +52,7 @@
 			<tr>
 				<th data-field="id">Numero Sap</th>
 				<th data-field="id">Material</th>
+				<th data-field="id">Proceso</th>
 				<th data-field="price">Total de Material a preparar</th>
 			</tr>
 		</thead>
@@ -69,6 +61,7 @@
 				<tr>
 					<td>{{sapNumber}}</td>
 					<td>{{description}}</td>
+					<td>{{process}}</td>
 					<td>{{totalAmount}} {{measurementUnit}}</td>
 				</tr>
 			{{/each}}

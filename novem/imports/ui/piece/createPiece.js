@@ -38,7 +38,6 @@ Template.createPiece.events({
 				return Materialize.toast(err.error, 4000);
 			}
 
-
 			Materialize.toast('Pieza creada exitosamente', 4000);
 			$('#piece').val('');
 		});
