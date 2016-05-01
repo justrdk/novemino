@@ -9,7 +9,11 @@ import { ProcessMaterials } from '../processMaterials/processMaterials.js';
 const deleteProyectPieces = (piecesToDelete) => {
 	piecesToDelete.forEach((piece) => {
 		const pieceId = piece._id;
-		Pieces.remove(pieceId);
+		Pieces.update(pieceId, {
+			$set: {
+				isActive: false,
+			},
+		});
 	});
 };
 
@@ -22,8 +26,11 @@ const deletePiecesProjectMaterials = (piecesDeleted) => {
 		}).fetch();
 
 		processMaterialsToDelete.forEach((processMaterial) => {
-			const processMaterialId = processMaterial._id;
-			ProcessMaterials.remove(processMaterialId);
+			ProcessMaterials.update(processMaterial._id, {
+				$set: {
+					isActive: false,
+				},
+			});
 		});
 	});
 };
@@ -80,7 +87,11 @@ export const remove = new ValidatedMethod({
 			throw new Meteor.Error('Proyecto ya ha sido borrado anteriormente.');
 		}
 
-		Projects.remove(projectId);
+		Projects.update(projectId, {
+			$set: {
+				isActive: false,
+			},
+		});
 
 		// remove documents from other collections that contain these pieces
 		const piecesToDelete = Pieces.find({

@@ -1,0 +1,36 @@
+<template name="editDeletePiece">
+ <div class="row form-container form-wrapper">
+	<div class="col s8">
+		<div class="row">
+			<div class="input-field col s8 offset-s4">
+				<select id="projects">
+					<option value="" disabled selected>Escoja un Proyecto</option>
+					{{#each projects}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Proyectos</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<select id="pieces">
+					<option value="" disabled selected>Escoja una Pieza</option>
+					{{#each pieces}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Piezas</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<input placeholder="Nombre" id="piece" type="text" class="validate">
+				<label for="piece">Nombre Pieza</label>
+        	</div>
+		</div>
+		<div class="row">
+			<div class="col s8 offset-s4">
+				<button class="btn waves-effect waves-light blue darken-3" name="calcular" id="update-piece">Actualizar Datos</button>
+				<button class="btn waves-effect waves-light red darken-3" name="calcular" id="delete-piece">Borrar Pieza</button>
+			</div>
+		</div>
+	</div>
+</div>  
+</template>

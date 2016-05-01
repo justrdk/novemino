@@ -44,6 +44,8 @@ Template.editDeleteProject.events({
 					return Materialize.toast(err.error, 4000);
 				}
 
+				$('#project').val('');
+				$('#projects').val('');
 				Materialize.toast('Datos de proyecto actualizados exitosamente', 4000);
 				Tracker.afterFlush(() => {
 					$('select').material_select();
