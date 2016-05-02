@@ -13,6 +13,7 @@ import './dataForm.html';
 
 Template.dataForm.onCreated(function dataFormOnCreated() {
 	this.pieces = new ReactiveVar([]);
+	this.processes = new ReactiveVar([]);
 	this.materials = new ReactiveVar([]);
 	this.selectedProject = new ReactiveVar('');
 	this.selectedPiece = new ReactiveVar('');

@@ -13,6 +13,7 @@ import '../../ui/materialConsumption/materialConsumption.js';
 import '../../ui/project/editDeleteProject.js';
 import '../../ui/piece/editDeletePiece.js';
 import '../../ui/plating/editDeletePlating.js';
+import '../../ui/process/editDeleteProcess.js';
 
 Router.configure({
 	layoutTemplate: 'appLayout',
@@ -114,5 +115,14 @@ Router.route('/editarEnchape', {
 	},
 	waitOn: function waitOn() {
 		return Meteor.subscribe('allPlatings');
+	},
+});
+
+Router.route('/editarProceso', {
+	action: function action() {
+		this.render('editDeleteProcess');
+	},
+	waitOn: function waitOn() {
+		return Meteor.subscribe('platingsProcesses');
 	},
 });
