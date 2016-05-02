@@ -13,6 +13,7 @@ import './dataForm.html';
 
 Template.dataForm.onCreated(function dataFormOnCreated() {
 	this.pieces = new ReactiveVar([]);
+	this.processes = new ReactiveVar([]);
 	this.materials = new ReactiveVar([]);
 	this.selectedProject = new ReactiveVar('');
 	this.selectedPiece = new ReactiveVar('');
@@ -82,14 +83,6 @@ Template.dataForm.events({
 			instance.selectedPiece.set(selectedPiece);
 		}
 	},
-	'change #processes'(event, instance) {
-		const target = event.target;
-		const selectedProcess = $(target).val();
-
-		if (selectedProcess) {
-			instance.selectedProcess.set(selectedProcess);
-		}
-	},
 	'input #quantity'(event, instance) {
 		const target = event.target;
 		const quantity = parseInt($(target).val(), 10);
@@ -152,6 +145,15 @@ Template.dataForm.events({
 
 		const concatMaterialDetails = materialDetails.concat(materialsWithoutDuplicates);
 		instance.materialsDetails.set(concatMaterialDetails);
+
+		$('#projects').val('');
+		$('#pieces').val('');
+		$('#platings').val('');
+		$('#quantity').val('');
+
+		Tracker.afterFlush(() => {
+			$('select').material_select();
+		});
 	},
 	'click #clean-calculations'(event, instance) {
 		instance.materialsDetails.set([]);
