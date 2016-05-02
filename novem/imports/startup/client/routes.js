@@ -15,6 +15,7 @@ import '../../ui/piece/editDeletePiece.js';
 import '../../ui/plating/editDeletePlating.js';
 import '../../ui/process/editDeleteProcess.js';
 import '../../ui/material/editDeleteMaterial.js';
+import '../../ui/materialConsumption/editDeleteMaterialConsumption.js';
 
 Router.configure({
 	layoutTemplate: 'appLayout',
@@ -134,5 +135,19 @@ Router.route('/editarMaterial', {
 	},
 	waitOn: function waitOn() {
 		return Meteor.subscribe('allMaterials');
+	},
+});
+
+Router.route('/editarConsumoMaterial', {
+	action: function action() {
+		this.render('editDeleteMaterialConsumption');
+	},
+	waitOn: function waitOn() {
+		return [
+			Meteor.subscribe('projectsWithPieces'),
+			Meteor.subscribe('platingsProcesses'),
+			Meteor.subscribe('allMaterials'),
+			Meteor.subscribe('materialsConsumption'),
+		];
 	},
 });

@@ -1,0 +1,63 @@
+<template name="editDeleteMaterialConsumption">
+ <div class="row form-container form-wrapper">
+	<div class="col s8">
+		<div class="row">
+			<div class="input-field col s8 offset-s4">
+				<select id="projects">
+					<option value="" disabled selected>Escoja un Proyecto</option>
+					{{#each projects}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Proyectos</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<select id="pieces">
+					<option value="" disabled selected>Escoja una Pieza</option>
+					{{#each pieces}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Piezas</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<select id="platings">
+					<option value="" disabled selected>Escoja un Enchape</option>
+					{{#each platings}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Enchapes</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<select id="processes">
+					<option value="" disabled selected>Escoja un Proceso</option>
+					{{#each processes}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+				</select>
+				<label>Procesos</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<select id="materials">
+					<option value="" disabled selected>Escoja un Material</option>
+					{{#each materials}}
+						<option value="{{_id}}"> {{sapNumber}} - {{description}}</option>
+					{{/each}}
+				</select>
+				<label>Materiales</label>
+			</div>
+			<div class="input-field col s8 offset-s4">
+				<input placeholder="Cantidad" id="quantity" type="text" class="validate">
+				<label for="quantity">Cantidad</label>
+        	</div>
+		</div>
+		<div class="row">
+			<div class="col s8 offset-s4">
+				<button class="btn waves-effect waves-light blue darken-3" name="create-data" id="update-material-consumption">Actualizar Datos</button>
+				<button class="btn waves-effect waves-light blue darken-3" name="create-data" id="delete-material-consumption">Borrar Datos</button>
+			</div>
+		</div>
+	</div>
+</div>  
+</template>
