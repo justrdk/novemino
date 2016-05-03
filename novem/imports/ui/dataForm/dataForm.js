@@ -24,6 +24,8 @@ Template.dataForm.onCreated(function dataFormOnCreated() {
 
 Template.dataForm.onRendered(function dataFormOnRendered() {
 	$('select').material_select();
+	$('.dropdown-button').dropdown();
+	$('.button-collapse').sideNav();
 });
 
 Template.dataForm.helpers({

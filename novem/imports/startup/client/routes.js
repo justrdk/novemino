@@ -3,6 +3,9 @@ import { Meteor } from 'meteor/meteor';
 
 import '../../ui/layout.js';
 import '../../ui/appLoading.js';
+import '../../ui/accessDenied.js';
+import '../../ui/login/login.js';
+import '../../ui/register/register.js';
 import '../../ui/dataForm/dataForm.js';
 import '../../ui/project/createProject.js';
 import '../../ui/piece/createPiece.js';
@@ -20,11 +23,40 @@ import '../../ui/materialConsumption/editDeleteMaterialConsumption.js';
 Router.configure({
 	layoutTemplate: 'appLayout',
 	loadingTemplate: 'appLoading',
+	waitOn: function waitOn() {
+		return Meteor.subscribe('userData');
+	},
+});
+
+Router.onBeforeAction(function onBeforeAction() {
+	if (!Meteor.userId()) {
+		this.render('accessDenied');
+	} else {
+		this.next();
+	}
+}, {
+	only: ['crearUsuario', 'crearProyecto', 'crearPieza', 'crearEnchape',
+		'crearProceso', 'crearMaterial', 'consumoMaterial', 'editarProyecto',
+		'editarPieza', 'editarEnchape', 'editarProceso', 'editarMaterial',
+		'editarConsumoMaterial', 'editarUsuario',
+	],
 });
 
 Router.route('/', {
 	action: function action() {
 		this.redirect('home');
+	},
+});
+
+Router.route('/crearUsuario', {
+	action: function action() {
+		this.render('register');
+	},
+});
+
+Router.route('/login', {
+	action: function action() {
+		this.render('login');
 	},
 });
 
