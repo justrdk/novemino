@@ -1,3 +1,4 @@
+import './userPublications.js';
 import './projectPiecesPublications.js';
 import './processMaterialsPublications.js';
 import './platingsPublications.js';

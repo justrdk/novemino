@@ -1,10 +1,20 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 import { Projects } from '../../api/projects/projects.js';
 import { Platings } from '../../api/platings/platings.js';
-import { Materials } from '../../api/materials/materials.js';
 import { Processes } from '../../api/processes/processes.js';
 import { Pieces } from '../../api/pieces/pieces.js';
+
+const initUser = () => {
+	return {
+		email: 'test@test.com',
+		password: 'password1',
+		profile: {
+			name: 'Eduardo Suazo',
+		},
+	};
+};
 
 const initProjects = () => {
 	const projects = [{
@@ -116,6 +126,10 @@ const initProcesses = (platings) => {
 };
 
 Meteor.startup(() => {
+	const user = initUser();
+	if (Meteor.users.find().count() === 0) {
+		Accounts.createUser(user);
+	}
 	const projects = initProjects();
 	const pieces = initPieces(projects);
 	const platings = initPlatings();

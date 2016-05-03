@@ -26,3 +26,5 @@ mdg:validated-method
 mdg:validation-error
 iron:router
 fortawesome:fontawesome
+accounts-password
+accounts-base
