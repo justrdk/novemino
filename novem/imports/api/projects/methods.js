@@ -44,6 +44,9 @@ export const insert = new ValidatedMethod({
 		const project = {
 			name,
 		};
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 		Projects.insert(project);
 	},
 });
@@ -59,6 +62,10 @@ export const updateName = new ValidatedMethod({
 			_id: projectId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!project) {
 			throw new Meteor.Error('Proyecto a actualizar no existe en base de datos');
@@ -82,6 +89,10 @@ export const remove = new ValidatedMethod({
 			_id: projectId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!project) {
 			throw new Meteor.Error('Proyecto ya ha sido borrado anteriormente.');

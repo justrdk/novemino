@@ -36,6 +36,10 @@ export const insert = new ValidatedMethod({
 			isActive: true,
 		}) !== undefined;
 
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
+
 		if (exist) {
 			throw new Meteor.Error('Datos ya existenes en base de datos, no se aceptan duplicados');
 		} else {
@@ -59,6 +63,10 @@ export const updateProcessMaterial = new ValidatedMethod({
 			pieceId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!processMaterial) {
 			throw new Meteor.Error('Material a actualizar no existe en base de datos');
@@ -86,6 +94,10 @@ export const remove = new ValidatedMethod({
 			pieceId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!processMaterial) {
 			throw new Meteor.Error('Material ha borrar no se encuentra en base de datos');
