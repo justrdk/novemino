@@ -16,6 +16,10 @@ export const insert = new ValidatedMethod({
 			name,
 		};
 
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
+
 		Platings.insert(plating);
 	},
 });
@@ -31,6 +35,10 @@ export const updateName = new ValidatedMethod({
 			_id: platingId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!plating) {
 			throw new Meteor.Error('Enchape a actualizar no existe en base de datos');
@@ -54,6 +62,10 @@ export const remove = new ValidatedMethod({
 			_id: platingId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!plating) {
 			throw new Meteor.Error('Enchape ya ha sido borrado anteriormente');

@@ -17,6 +17,9 @@ export const insert = new ValidatedMethod({
 			name,
 		};
 
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 		Pieces.insert(piece);
 	},
 });
@@ -32,6 +35,10 @@ export const updateName = new ValidatedMethod({
 			_id: pieceId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!piece) {
 			throw new Meteor.Error('Pieza a actualizar no existe en base de datos');
@@ -55,6 +62,10 @@ export const remove = new ValidatedMethod({
 			_id: pieceId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!piece) {
 			throw new Meteor.Error('Pieza ya ha sido borrado anteriormente.');

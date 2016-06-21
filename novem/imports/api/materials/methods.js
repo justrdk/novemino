@@ -26,6 +26,10 @@ export const insert = new ValidatedMethod({
 			measurementUnit,
 		};
 
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
+
 		Materials.insert(material);
 	},
 });
@@ -55,6 +59,10 @@ export const updateMaterial = new ValidatedMethod({
 			_id: materialId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!material) {
 			throw new Meteor.Error('Material a actualizar no encontrado en base de datos');
@@ -96,6 +104,10 @@ export const remove = new ValidatedMethod({
 			_id: materialId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!material) {
 			throw new Meteor.Error('Material a borrar no encontrado');

@@ -17,6 +17,9 @@ export const insert = new ValidatedMethod({
 			name,
 		};
 
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 		Processes.insert(process);
 	},
 });
@@ -32,6 +35,10 @@ export const updateName = new ValidatedMethod({
 			_id: processId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!process) {
 			throw new Meteor.Error('Proceso a actualizar no existe en base de datos');
@@ -55,6 +62,10 @@ export const remove = new ValidatedMethod({
 			_id: processId,
 			isActive: true,
 		});
+
+		if (!this.userId) {
+			throw new Meteor.Error('Necesita iniciar sesion para realizar esta operacion');
+		}
 
 		if (!process) {
 			throw new Meteor.Error('Proceso ya ha sido borrado anteriormente');
